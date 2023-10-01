@@ -6,16 +6,14 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "splash": {
+      "image": "https://www.freepnglogos.com/uploads/w-logo/w-letter-alphabet-inspiration-vector-logo-design-25.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#007bff"
     },
     "android": {
       "adaptiveIcon": {

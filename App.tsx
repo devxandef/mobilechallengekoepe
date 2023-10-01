@@ -1,32 +1,25 @@
-import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { signUp } from "./src/services/firebase/authService";
+import React from "react";
+import "react-native-reanimated";
+import { Provider } from "react-redux";
+import store from "./src/services/redux/store";
+import { NavigationContainer } from "@react-navigation/native";
+import SplashScreenComponent from "./src/presentation/components/Splash"; // Importe o componente da splash screen
+import { AppOrAuthStack } from "./src/presentation/navigation/";
+import Toast from "react-native-toast-message";
 
 export default function App() {
-  const handleSignUp = async () => {
-    const email: string = "meuemail@example.com"; // Certifique-se de que email seja uma string
-    const password: string = "minhasenha123"; // Certifique-se de que password seja uma string
-    const userCredential = await signUp(email, password);
-  };
-
-  useEffect(() => {
-    handleSignUp();
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Open up App!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <SplashScreenComponent
+          image={{
+            uri: "https://www.freepnglogos.com/uploads/w-logo/w-letter-alphabet-inspiration-vector-logo-design-25.png",
+          }}
+        >
+          <AppOrAuthStack />
+        </SplashScreenComponent>
+        <Toast />
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

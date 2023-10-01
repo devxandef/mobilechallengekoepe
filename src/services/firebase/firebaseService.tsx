@@ -1,16 +1,8 @@
-import { initializeApp } from "firebase/app";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  createUserWithEmailAndPassword,
-  Auth,
-  UserCredential,
-  initializeAuth,
-} from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDf304VdWxJD0MEPorT5tCXCqX_WAi8vlQ",
   authDomain: "koepesesafio.firebaseapp.com",
@@ -20,8 +12,9 @@ const firebaseConfig = {
   appId: "1:106065627119:web:dff2ad0890220f45d0181a",
 };
 
-const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth = app.auth();
+const DB = app.firestore();
 
-export { auth };
+export { auth, DB };
