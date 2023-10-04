@@ -6,7 +6,7 @@ O **Desafio Coodesh: Dicionário de Palavras** é uma aplicação React Native q
 
 - Linguagem: **typescript (ES6+)**
 - Framework: **React Native**
-- Tecnologias adicionais: **Redux, Redux Toolkit, React Navigation, Axios, Firebase, useQuery, AsyncStorage
+- Tecnologias adicionais: **Redux, Redux Toolkit, React Navigation, Axios, Firebase, useQuery, AsyncStorage, reactotron
 
 ## Instalação e Uso do Projeto
 
@@ -23,6 +23,19 @@ Para usar o projeto, siga os passos abaixo:
 3. **Execute a aplicação:**
 
     yarn android ou npm android
+
+## Funcionalidades Obrigatórias
+
+3. **Iniciando o reactotron:**
+
+O Reactotron é uma ferramenta de depuração para aplicativos React Native. Ele fornece uma interface gráfica que permite a você ver o que está acontecendo em seu aplicativo em tempo real, incluindo a saída do console, estado de componentes, performance e muito mais.
+
+baixe a app desktop
+https://infinite.red/reactotron
+
+inicia o serviço 
+adb reverse tcp:9090 tcp:9090
+
 
 ## Funcionalidades Obrigatórias
 
