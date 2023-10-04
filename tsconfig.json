@@ -9,5 +9,6 @@
       "@presentation/*": ["presentation/*"],
       "@services/*": ["services/*"]
     }
-  }
+  },
+  "typeRoots": ["./types"]
 }

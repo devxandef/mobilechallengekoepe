@@ -1,5 +1,10 @@
 import { auth } from "./firebaseService";
-import { setAuthenticated, setUnauthenticated } from "../redux/actions";
+import {
+  setAuthenticated,
+  setUnauthenticated,
+  setUser,
+} from "../redux/actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 
 const signIn = async (
@@ -8,9 +13,13 @@ const signIn = async (
   password: string
 ): Promise<any> => {
   try {
-    await auth.signInWithEmailAndPassword(email, password).then((user) => {
-      dispatch(setAuthenticated());
-    });
+    await auth
+      .signInWithEmailAndPassword(email, password)
+      .then(async (user: any) => {
+        await AsyncStorage.setItem("user", JSON.stringify(user));
+        dispatch(setAuthenticated());
+        dispatch(setUser(user));
+      });
   } catch (erro: any) {
     let msg = "";
     if (erro.code === "auth/user-not-found") {
@@ -32,12 +41,21 @@ const signIn = async (
 const signOutUser = async (dispatch: any): Promise<void> => {
   try {
     dispatch(setUnauthenticated());
+    await AsyncStorage.removeItem("user");
     await auth.signOut();
   } catch (error) {
     throw error;
   }
 };
 
+const getInfoUser = async (): Promise<any> => {
+  try {
+    const item = await AsyncStorage.getItem("user");
+    return JSON.parse(item || "");
+  } catch (error) {
+    throw error;
+  }
+};
 const signUp = async (
   email: string,
   password: string,
@@ -76,4 +94,4 @@ const signUp = async (
   }
 };
 
-export { signIn, signOutUser, signUp };
+export { signIn, signOutUser, signUp, getInfoUser };

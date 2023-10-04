@@ -1,15 +1,22 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKETt,
+  FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_APP_ID,
+} from "@env";
 
-import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 const firebaseConfig = {
-  apiKey: "AIzaSyDf304VdWxJD0MEPorT5tCXCqX_WAi8vlQ",
-  authDomain: "koepesesafio.firebaseapp.com",
-  projectId: "koepesesafio",
-  storageBucket: "koepesesafio.appspot.com",
-  messagingSenderId: "106065627119",
-  appId: "1:106065627119:web:dff2ad0890220f45d0181a",
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKETt,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
 };
 
 const app = firebase.initializeApp(firebaseConfig);

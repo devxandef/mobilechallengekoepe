@@ -1,65 +1,100 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
+import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import Toast from "react-native-toast-message";
 import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import { words as w } from "../../../data/database/words";
-
-const PAGE_SIZE = 20;
-
-const words: string[] = w;
-
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
-
-const renderItem = ({ item }: { item: string }) => {
-  const cardColor = getRandomColor();
-  return (
-    <TouchableOpacity style={{ flex: 1 }} onPress={() => console.log("ok")}>
-      <View style={[styles.card, { backgroundColor: cardColor }]}>
-        <Text style={styles.text}>{item}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+  listarItensDoUsuario,
+  verificarPalavraExistente,
+  excludByWord,
+  criarItem,
+} from "../../../services/firebase/databaseService";
+import RenderItem from "../../components/renderItem/renderItem";
+import { useFocusEffect } from "@react-navigation/native";
+import { getInfoUser } from "../../../services/firebase/authService";
+import { WordModal } from "../../components/Modal";
 
 const History: React.FC = () => {
   const [data, setData] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isFetching, setFetching] = useState(false);
+  const [isLike, setLike] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [word, setWord] = useState("");
 
-  const loadMoreData = useCallback(() => {
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const end = currentPage * PAGE_SIZE;
-    const newData = words.slice(start, end);
-    setData([...data, ...newData]);
-  }, [currentPage, data]);
+  const fetchItems = async () => {
+    const userInfo = await getInfoUser();
+    const item = await listarItensDoUsuario(userInfo.user.uid, "history");
+    if (item) setData(item);
+    setFetching(false);
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      setFetching(true);
+      fetchItems();
+    }, [])
+  );
 
-  useEffect(() => {
-    loadMoreData();
-  }, [currentPage]);
+  const openModal = () => setOpen(true);
+  const onClose = () => setOpen(false);
 
   const handleEndReached = () => {
     setCurrentPage(currentPage + 1);
   };
 
+  const handleOpen = async (item: string) => {
+    setWord(item);
+    const infoUser = await getInfoUser();
+    const check = await verificarPalavraExistente(
+      infoUser.user.uid,
+      item,
+      "favorites"
+    );
+    setLike(check);
+    openModal();
+  };
+
+  const handleChangeLike = async () => {
+    const infoUser = await getInfoUser();
+    if (isLike) {
+      await excludByWord(infoUser.user.uid, word, "favorites");
+      setLike(false);
+      Toast.show({
+        type: "info",
+        text1: "Palavra removida dos favoritos!",
+        position: "bottom",
+      });
+    } else {
+      criarItem(infoUser.user.uid, { word: word }, "favorites");
+      setLike(true);
+      Toast.show({
+        type: "info",
+        text1: "Palavra adicionada aos favoritos!",
+        position: "bottom",
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
+      {isFetching && <ActivityIndicator size={"large"} />}
+
       <FlatList
         data={data}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <RenderItem item={item} onPress={handleOpen} />
+        )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}
+      />
+      <WordModal
+        onClose={onClose}
+        isVisible={open}
+        word={word}
+        onNext={() => true}
+        onPrevious={() => true}
+        isLike={isLike}
+        setLike={handleChangeLike}
       />
     </View>
   );
@@ -69,17 +104,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  card: {
-    flex: 1,
-    margin: 10,
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  text: {
-    color: "#fff",
-    fontSize: 18,
   },
 });
 

@@ -17,8 +17,8 @@ const Tab = createMaterialTopTabNavigator();
 const Tabs = () => (
   <Tab.Navigator>
     <Tab.Screen name="Word List" component={DashboardScreen} />
-    <Tab.Screen name="History" component={FavoritesScreen} />
-    <Tab.Screen name="Favorites" component={HistoryScreen} />
+    <Tab.Screen name="History" component={HistoryScreen} />
+    <Tab.Screen name="Favorites" component={FavoritesScreen} />
   </Tab.Navigator>
 );
 
