@@ -6,30 +6,23 @@ O **Desafio Coodesh: Dicionário de Palavras** é uma aplicação React Native q
 
 - Linguagem: **JavaScript (ES6+)**
 - Framework: **React Native**
-- Tecnologias adicionais: **Redux, Redux Toolkit, React Navigation, Axios, Firebase (opcional para autenticação), Async Storage**
+- Tecnologias adicionais: **Redux, Redux Toolkit, React Navigation, Axios, Firebase, useQuery, AsyncStorage
 
 ## Instalação e Uso do Projeto
 
-Para instalar e usar o projeto, siga os passos abaixo:
+Para usar o projeto, siga os passos abaixo:
 
 1. **Clone o repositório:**
 
+ git clone https://github.com/devxandef/mobilechallengekoepe.git
 
 2. **Instale as dependências:**
 
+  yarn ou npm install
 
-3. **Configuração do arquivo de ambiente:**
-- Crie um arquivo chamado `.env` na raiz do projeto.
-- Adicione suas chaves de API ou outras configurações sensíveis, caso necessário.
+3. **Execute a aplicação:**
 
-4. **Execute a aplicação:**
-
-
-5. **Para build Android:**
-
-
-6. **Para build iOS:**
-
+    yarn android ou npm android
 
 ## Funcionalidades Obrigatórias
 
@@ -40,23 +33,7 @@ Para instalar e usar o projeto, siga os passos abaixo:
 5. Caching de resultados das requisições à API para agilizar buscas repetidas.
 6. Seguir o wireframe para a página de listagem dos dados.
 
-## Funcionalidade Diferencial
 
-Implementação de autenticação com usuário e senha, associando favoritos e histórico ao ID do usuário e salvando essas informações em um banco de dados local ou remoto (Firebase, por exemplo).
 
-## Como Contribuir
+## This is a challenge by Coodesh
 
-Se você deseja contribuir para este projeto, siga os passos abaixo:
-
-1. Faça um fork do repositório.
-2. Crie uma nova branch para suas modificações.
-3. Faça suas alterações e adições.
-4. Commit suas mudanças.
-5. Push para a branch.
-6. Crie um pull request para revisão.
-
-Este projeto é um desafio proposto pela Coodesh. Para mais informações, acesse [link do desafio na Coodesh](https://www.coodesh.com/challenges/614d19e6d376732cfefe16fc).
-
----
-
-*Este é um desafio proposto pela Coodesh. Leia o [README original do desafio](https://github.com/coodesh/desafio-dicionario) para entender completamente os requisitos do projeto.*
