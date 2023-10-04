@@ -4,7 +4,7 @@ O **Desafio Coodesh: Dicionário de Palavras** é uma aplicação React Native q
 
 ## Tecnologias Utilizadas
 
-- Linguagem: **JavaScript (ES6+)**
+- Linguagem: **typescript (ES6+)**
 - Framework: **React Native**
 - Tecnologias adicionais: **Redux, Redux Toolkit, React Navigation, Axios, Firebase, useQuery, AsyncStorage
 
