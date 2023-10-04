@@ -19,8 +19,6 @@ const WordModal = ({
   isVisible,
   word,
   onClose,
-  onNext,
-  onPrevious,
   isLike,
   setLike = () => {},
 }) => {
@@ -28,8 +26,8 @@ const WordModal = ({
 
   const [text, setText] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
-
   const [progress, setProgress] = useState(0);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (isPlaying) {
@@ -70,6 +68,17 @@ const WordModal = ({
       "favorites"
     );
     setLike(check);
+  };
+
+  const onNext = () => {
+    const proximoIndex = (index + 1) % data?.results?.length;
+    setIndex(proximoIndex);
+  };
+
+  const onPrevious = () => {
+    const anteriorIndex =
+      (index - 1 + data?.results?.length) % data?.results?.length;
+    setIndex(anteriorIndex);
   };
 
   if (isLoading) return <ActivityIndicator size={"large"} />;
@@ -121,14 +130,22 @@ const WordModal = ({
               title={isPlaying ? "Pausar" : "Reproduzir"}
               onPress={handlePlayPause}
             />
+            <View style={{ margin: 10 }}>
+              {Array.isArray(data?.results) && (
+                <Text>{data?.results[index]?.definition || " - "} </Text>
+              )}
+            </View>
           </View>
         </View>
 
         <View style={styles.footer}>
-          <TouchableOpacity onPress={onPrevious} style={styles.footerButton}>
-            <Text style={styles.footerButtonText}>Voltar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onNext} style={styles.footerButton}>
+          <View>
+            <TouchableOpacity style={styles.footerButton} onPress={onPrevious}>
+              <Text style={styles.footerButtonText}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity style={styles.footerButton} onPress={onNext}>
             <Text style={styles.footerButtonText}>Próximo</Text>
           </TouchableOpacity>
         </View>
@@ -155,7 +172,7 @@ const styles = StyleSheet.create({
   contentChildren: {
     backgroundColor: "#fff",
     margin: 10,
-    height: 240,
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
   },

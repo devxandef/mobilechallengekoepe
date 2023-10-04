@@ -18,7 +18,6 @@ const signIn = async (
       .then(async (user: any) => {
         await AsyncStorage.setItem("user", JSON.stringify(user));
         dispatch(setAuthenticated());
-        dispatch(setUser(user));
       });
   } catch (erro: any) {
     let msg = "";

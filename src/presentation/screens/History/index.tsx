@@ -91,8 +91,6 @@ const History: React.FC = () => {
         onClose={onClose}
         isVisible={open}
         word={word}
-        onNext={() => true}
-        onPrevious={() => true}
         isLike={isLike}
         setLike={handleChangeLike}
       />

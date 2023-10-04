@@ -93,8 +93,6 @@ const Home: React.FC = () => {
         onClose={onClose}
         isVisible={openModal}
         word={word}
-        onNext={() => true}
-        onPrevious={() => true}
         isLike={isLike}
         setLike={handleChangeLike}
       />

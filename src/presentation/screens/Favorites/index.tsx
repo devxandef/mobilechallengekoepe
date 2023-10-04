@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import Toast from "react-native-toast-message";
 import {
   listarItensDoUsuario,
   verificarPalavraExistente,
+  criarItem,
+  excludByWord,
 } from "../../../services/firebase/databaseService";
 import RenderItem from "../../components/renderItem/renderItem";
 import { useFocusEffect } from "@react-navigation/native";
@@ -30,6 +33,13 @@ const Favorites: React.FC = () => {
     }, [])
   );
 
+  useFocusEffect(
+    React.useCallback(() => {
+      setFetching(true);
+      fetchItems();
+    }, [open])
+  );
+
   const openModal = () => setOpen(true);
   const onClose = () => setOpen(false);
 
@@ -47,6 +57,27 @@ const Favorites: React.FC = () => {
     );
     setLike(check);
     openModal();
+  };
+
+  const handleChangeLike = async () => {
+    const infoUser = await getInfoUser();
+    if (isLike) {
+      await excludByWord(infoUser.user.uid, word, "favorites");
+      setLike(false);
+      Toast.show({
+        type: "info",
+        text1: "Palavra removida dos favoritos!",
+        position: "bottom",
+      });
+    } else {
+      criarItem(infoUser.user.uid, { word: word }, "favorites");
+      setLike(true);
+      Toast.show({
+        type: "info",
+        text1: "Palavra adicionada aos favoritos!",
+        position: "bottom",
+      });
+    }
   };
 
   return (
@@ -67,9 +98,8 @@ const Favorites: React.FC = () => {
         onClose={onClose}
         isVisible={open}
         word={word}
-        onNext={() => true}
-        onPrevious={() => true}
         isLike={isLike}
+        setLike={handleChangeLike}
       />
     </View>
   );
